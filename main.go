@@ -24,15 +24,6 @@ type Hotkey struct {
 
 type HWND uintptr
 
-type MSG struct {
-	HWND HWND
-	UINT uintptr
-	WPARAM int16
-	LPARAM int64
-	DWORD int32
-	POINT struct{ X, Y int64 }
-}
-
 type POINT struct {
 	X int32
 	Y int32
@@ -43,6 +34,15 @@ type RECT struct {
 	Top int32
 	Right int32
 	Bottom int32
+}
+
+type MSG struct {
+	Hwnd HWND
+	Uint uintptr
+	WParam int16
+	LParam int64
+	DWord int32
+	Point POINT
 }
 
 // end of windows
@@ -136,7 +136,7 @@ func main() {
 		}
 
 		// id is in WPARAM field
-		if id := msg.WPARAM; id != 0 {
+		if id := msg.WParam; id != 0 {
 			fmt.Println("Hotkey pressed:", keys[id])
 			if id == 3 { // ctrl+alt+x
 				fmt.Println("CTRL+ALT+X pressed, exiting...")
